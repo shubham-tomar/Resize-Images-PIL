@@ -6,7 +6,7 @@ class resize_img():
 
     def __init__(self):
 
-        folderpath = "C:\\Users\\shubham\\Desktop\\collegeEntry"
+        folderpath = "C:\\Users\\shubham\\Pictures"
         allfiles = glob(folderpath + "/*")
         # print(allfiles)
         imgdataset = []
@@ -18,11 +18,12 @@ class resize_img():
             imgdataset.extend(self.resizeImages(picFolderPath,f))
 
         # print(imgdataset)
-        IMGData = pd.DataFrame(data = imgdataset, columns=['Name','Size'])
+        IMGData = pd.DataFrame(data = imgdataset, columns=['Name','Size']) # Dataset to get the idea about avg. size of pictures
         # print(IMGData)
-        IMGData.to_csv('ImageDetails.csv')
+        #IMGData.to_csv('ImageDetails.csv')
 
-
+    # Main Function******************************************************************
+    
     def resizeImages(self,imagesPath,folderPath):
 
         imgNameList = []
@@ -40,10 +41,14 @@ class resize_img():
 
             print(image.mode,image.format,imgname,imgtype,image.size)
             try:
-                if imgtype == 'campus':
-                    w = 900
-                    wpercent = (w / float(image.size[0]))
-                    hsize = int((float(image.size[1]) * float(wpercent)))
+                if imgtype == 'brand':
+                    
+                    ### Main work Starts Here
+                    
+                    w = 900  # Desired width 
+                    wpercent = (w / float(image.size[0]))  
+                    #New Height for desired width to maintain aspect ratio
+                    hsize = int((float(image.size[1]) * float(wpercent))) 
                     nimg = image.resize((w,hsize))
                     print(nimg.size)
                     nimg.save(folderPath+'\\images\\resize_'+imgname)
